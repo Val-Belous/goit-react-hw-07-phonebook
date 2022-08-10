@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import styles from './Form.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../Redux/Contacts/contacts-slice';
+import { addContacts } from 'Redux/Contacts/contacts-operations';
 
 export default function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   const dispatch = useDispatch();
 
@@ -37,10 +36,9 @@ export default function Form() {
       alert(`${name} is already in contacts.`);
       return;
     }
-    const id = nanoid();
-    const user = { name, number, id };
+    const user = { name, number };
 
-    dispatch(addContact(user));
+    dispatch(addContacts(user));
     setName('');
     setNumber('');
   };
